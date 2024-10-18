@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4">Dashboard</h1>
+
+<!-- Form to shorten a URL -->
+<div class="card mb-5">
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('shorten_url') }}">
+            <div class="form-group">
+                <input type="url" name="original_url" class="form-control" placeholder="Enter URL to shorten" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Shorten URL</button>
+        </form>
+    </div>
+</div>
+
+<!-- List of user's shortened URLs -->
+<h2>Your URLs</h2>
+<div class="list-group">
+    {% for url in urls %}
+    <a href="/{{ url.short_url }}" target="_blank" class="list-group-item list-group-item-action">
+        <strong>{{ url.short_url }}</strong> - {{ url.original_url }}<br>
+        <small>Clicks: {{ url.clicks|length }}</small>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
